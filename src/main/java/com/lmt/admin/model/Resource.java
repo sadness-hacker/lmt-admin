@@ -29,6 +29,12 @@ public class Resource implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
+	/**
+	 * 上级资源id
+	 */
+	@Column(name="pid")
+	private Integer pid;
+	
 	@Column(name="name")
 	private String name;
 	/**
@@ -68,6 +74,12 @@ public class Resource implements Serializable {
 	 */
 	@Column(name="return_value")
 	private String returnValue;
+	
+	/**
+	 * 开发者
+	 */
+	@Column(name="developer")
+	private String developer;
 	
 	@Column(name="description")
 	private String description;
@@ -145,6 +157,22 @@ public class Resource implements Serializable {
 
 	public void setReturnValue(String returnValue) {
 		this.returnValue = returnValue;
+	}
+
+	public String getDeveloper() {
+		return developer;
+	}
+
+	public void setDeveloper(String developer) {
+		this.developer = developer;
+	}
+
+	public Integer getPid() {
+		return pid;
+	}
+
+	public void setPid(Integer pid) {
+		this.pid = pid;
 	}
 	
 }
