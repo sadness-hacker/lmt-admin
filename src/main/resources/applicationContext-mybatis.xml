@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd" >
+		<!-- 创建SqlSessionFactory，同时指定数据源-->
+		<!-- 注意下边的bean名称、id不要直接定义成sqlSessionFactory,
+			直接定义成sqlSessionFactory会导致org.mybatis.spring.mapper.MapperScannerConfigurer
+			在加载的时候先于"org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+			使数据库连接池中的jdbc.properties中定义的属性失效，dataSource注入失败。
+			这里没开启懒加载，如果开启懒加载也许不会失效（sorry,我暂时没尝试）
+		-->
+      	<bean id="xxSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      		<property name="dataSource" ref="dataSource" />
+      		<property name="configLocation" value="classpath:sqlMapConfig.xml" />
+      		<!-- 所有配置的mapper文件 -->
+     		<property name="mapperLocations" value="classpath:com/lmt/*/mapper/*.xml" />
+      	</bean>
+      	<!-- mybatis 自动装载 mapper的xml文件 -->
+	    <bean id="mybatisMapperScannerConfigure" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	        <property name="basePackage" value="com.lmt.**.mapper" />
+	        <!-- 这里不要直接注入sqlSessionFactory,改成sqlSessionFactoryBeanName,value就是上边定义的bean名称 -->
+	        <property name="sqlSessionFactoryBeanName" value="xxSqlSessionFactory"/>
+    	</bean>
+</beans>

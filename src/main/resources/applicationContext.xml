@@ -11,8 +11,5 @@
 	</context:component-scan>
 	<!-- 引入数据库连接池配置，这里用的阿里druid连接池 -->
 	<import resource="applicationContext-druid.xml"/>
-	<bean class="com.lmt.orm.factory.SqlFactory">
-		<property name="basePackage" value="com.lmt.admin.mapper"/>
-	</bean>
-	
+	<import resource="applicationContext-mybatis.xml"/>
 </beans>
