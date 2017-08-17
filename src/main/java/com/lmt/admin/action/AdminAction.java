@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lmt.admin.model.Admin;
+import com.lmt.admin.service.IAdminRoleService;
 import com.lmt.admin.service.IAdminService;
+import com.lmt.admin.service.IRoleService;
 import com.lmt.common.action.BaseAction;
 import com.lmt.common.util.PasswordUtil;
 
@@ -29,6 +31,12 @@ public class AdminAction extends BaseAction {
 	
 	@Resource
 	private IAdminService adminService;
+	
+	@Resource
+	private IAdminRoleService adminRoleService;
+	
+	@Resource
+	private IRoleService roleService;
 	
 	/**
 	 * 后台首页
