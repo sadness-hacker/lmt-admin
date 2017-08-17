@@ -31,15 +31,43 @@ public class Resource implements Serializable {
 	
 	@Column(name="name")
 	private String name;
-	
+	/**
+	 * 资源类型：menu(菜单),url(链接),button(按钮)
+	 */
 	@Column(name="type")
 	private String type;
-	
+	/**
+	 * 
+	 * 资源味一标识，一般和name相同
+	 * menu/button类型：元素id
+	 * url类型：链接地址
+	 * 
+	 */
 	@Column(name="c_key")
 	private String key;
-	
+	/**
+	 * 链接地址
+	 */
 	@Column(name="url")
 	private String url;
+	
+	/**
+	 * 
+	 * 返回值类型：page(页面),json(json字符串),redirect(重定向)
+	 * 默认值json
+	 * 
+	 */
+	@Column(name="return_type")
+	private String returnType;
+	/**
+	 * 验证不通过时的返回值
+	 * redirect：登录页,默认值/admin/login
+	 * page:指定jsp页面,默认值/WEB-INF/views/admin/login.jsp
+	 * json:指定的字符串,默认值为{"success":true,"code":400,"msg":"ADMIN_NOT_LOGIN"}
+	 * 
+	 */
+	@Column(name="return_value")
+	private String returnValue;
 	
 	@Column(name="description")
 	private String description;
@@ -101,6 +129,22 @@ public class Resource implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getReturnType() {
+		return returnType;
+	}
+
+	public void setReturnType(String returnType) {
+		this.returnType = returnType;
+	}
+
+	public String getReturnValue() {
+		return returnValue;
+	}
+
+	public void setReturnValue(String returnValue) {
+		this.returnValue = returnValue;
 	}
 	
 }
