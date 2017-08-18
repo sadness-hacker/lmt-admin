@@ -1,23 +1,30 @@
 package com.lmt.admin.action;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lmt.admin.dto.AdminDto;
 import com.lmt.admin.model.Admin;
+import com.lmt.admin.model.Role;
 import com.lmt.admin.service.IAdminRoleService;
 import com.lmt.admin.service.IAdminService;
 import com.lmt.admin.service.IRoleService;
 import com.lmt.common.action.BaseAction;
 import com.lmt.common.util.PasswordUtil;
+import com.lmt.orm.common.model.PaginationModel;
 
 /**
  * 
@@ -63,9 +70,40 @@ public class AdminAction extends BaseAction {
 	public String list(
 			@RequestParam(name="currPage",defaultValue="0") int currPage,
 			@RequestParam(name="limit",defaultValue="10") int limit,
+			@RequestParam(value="username",required=false) String username,
+			@RequestParam(value="realname",required=false) String realname,
+			@RequestParam(value="email",required=false) String email,
+			@RequestParam(value="phoneNum",required=false) String phoneNum,
 			HttpServletRequest request,HttpServletResponse response){
-		
-		return "admin/list";
+		PaginationModel<Admin> pageModel = new PaginationModel<Admin>();
+		pageModel.setCurrPage(currPage);
+		pageModel.setLimit(limit);
+		Admin admin = new Admin();
+		if(StringUtils.isNotBlank(username)){
+			admin.setUsername(username);
+		}
+		if(StringUtils.isNotBlank(realname)){
+			admin.setRealname(realname);
+		}
+		if(StringUtils.isNotBlank(email)){
+			admin.setEmail(email);
+		}
+		if(StringUtils.isNotBlank(phoneNum)){
+			admin.setPhoneNum(phoneNum);
+		}
+		pageModel.setT(admin);
+		pageModel = adminService.queryByPagination(pageModel);
+		List<Admin> list = pageModel.getList();
+		List<Admin> l = new ArrayList<Admin>(limit);
+		for(Admin a : list){
+			AdminDto dto = new AdminDto(a);
+			List<Role> roleList = roleService.listByAdminId(dto.getId());
+			dto.setRoleList(roleList);
+			l.add(dto);
+		}
+		pageModel.setList(l);
+		request.setAttribute("pageModel", pageModel);
+		return "admin/admin/list";
 	}
 	
 	/**
@@ -82,7 +120,7 @@ public class AdminAction extends BaseAction {
 			Admin admin = adminService.get(id);
 			request.setAttribute("admin", admin);
 		}
-		return "admin/edit";
+		return "admin/admin/edit";
 	}
 	
 	/**
@@ -100,6 +138,8 @@ public class AdminAction extends BaseAction {
 			@RequestParam(name="email") String email,
 			@RequestParam(name="phoneNum") String phoneNum,
 			@RequestParam(name="realname") String realname,
+			@RequestParam(name="avatar") String avatar,
+			@RequestParam(name="brief") String brief,
 			@RequestParam(name="status",defaultValue="1") int status,
 			HttpServletRequest request,HttpServletResponse response){
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -110,7 +150,7 @@ public class AdminAction extends BaseAction {
 			admin = adminService.load(admin);
 			if(admin != null){
 				map.put("code", 201);
-				map.put("msg", "用户名已存在");
+				map.put("msg", "用户名已被使用");
 				return map;
 			}
 			admin = new Admin();
@@ -138,10 +178,11 @@ public class AdminAction extends BaseAction {
 			admin.setSalt(salt);
 			admin.setStatus(status);
 			admin.setUsername(username);
+			admin.setAvatar(avatar);
+			admin.setBrief(brief);
 			adminService.insert(admin);
 		}else{
 			Admin admin = adminService.get(id);
-			boolean update = false;
 			if(!email.equalsIgnoreCase(admin.getEmail())){
 				Admin a = new Admin();
 				a.setEmail(email);
@@ -152,7 +193,6 @@ public class AdminAction extends BaseAction {
 					return map;
 				}
 				admin.setEmail(email);
-				update = true;
 			}
 			if(!phoneNum.equalsIgnoreCase(admin.getPhoneNum())){
 				Admin a = new Admin();
@@ -164,15 +204,33 @@ public class AdminAction extends BaseAction {
 					return map;
 				}
 				admin.setPhoneNum(phoneNum);
-				update = true;
 			}
-			if(update){
-				adminService.update(admin);
-			}
+			admin.setAvatar(avatar);
+			admin.setBrief(brief);
+			adminService.update(admin);
 		}
 		map.put("code", 200);
 		map.put("msg", "保存成功");
 		return map;
+	}
+	
+	/**
+	 * 修改管理员状态
+	 * @param id
+	 * @param status
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	@RequestMapping(value="/changeStatus",name="修改管理员状态")
+	public void changeStatus(
+			@RequestParam(value="id") int id,
+			@RequestParam(value="status") int status,
+			HttpServletRequest request,HttpServletResponse response) throws IOException{
+		Admin admin = adminService.get(id);
+		admin.setStatus(status);
+		adminService.update(admin);
+		response.sendRedirect("list");
 	}
 	
 	/**
@@ -185,7 +243,7 @@ public class AdminAction extends BaseAction {
 	public String findPwd(
 			HttpServletRequest request,HttpServletResponse response){
 		
-		return "admin/findPwd";
+		return "admin/admin/findPwd";
 	}
 	
 	/**
@@ -198,7 +256,7 @@ public class AdminAction extends BaseAction {
 	public String emailFindPwd(
 			HttpServletRequest request,HttpServletResponse response){
 		
-		return "admin/emailFindPwd";
+		return "admin/admin/emailFindPwd";
 	}
 	
 	/**
@@ -228,7 +286,7 @@ public class AdminAction extends BaseAction {
 	public String sendFindPwdEmailSuccess(
 			HttpServletRequest request,HttpServletResponse response){
 		
-		return "admin/sendFindPwdEmailSuccess";
+		return "admin/admin/sendFindPwdEmailSuccess";
 	}
 	
 	/**
@@ -243,7 +301,7 @@ public class AdminAction extends BaseAction {
 			@RequestParam(name="sign") String sign,
 			HttpServletRequest request,HttpServletResponse response){
 		
-		return "admin/resetPwd";
+		return "admin/admin/resetPwd";
 	}
 	
 }
