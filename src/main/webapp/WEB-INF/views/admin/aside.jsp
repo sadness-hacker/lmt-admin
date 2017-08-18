@@ -8,44 +8,22 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="header">主菜单</li>
-      <c:if test="${fn:indexOf(curr_user.privileges,'dashboardManageActive') > -1 }">
       <li class="${dashboardManageActive } treeview">
-          <a href="${ctx }/op/index"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+          <a href="${ctx }/admin/index"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+      </li>
+      <c:if test="${1 == 1}">
+      <li class="${adminManageActive } treeview">
+        <a href="${ctx }/admin/list"><i class="fa fa-user-secret"></i> <span>管理员</span></a>
       </li>
       </c:if>
-      <c:if test="${fn:indexOf(curr_user.privileges,'serverManageActive') > -1 }">
-      <li class="${serverManageActive } treeview">
-        <a href="${ctx }/op/server/list"><i class="fa fa-server"></i> <span>服务器</span></a>
+      <c:if test="${1 == 1}">
+      <li class="${roleManageActive } treeview">
+        <a href="${ctx }/admin/role/list"><i class="fa fa-group"></i> <span>角色管理</span></a>
       </li>
       </c:if>
-      <c:if test="${fn:indexOf(curr_user.privileges,'applicationManageActive') > -1 }">
-      <li class="${applicationManageActive } treeview">
-        <a href="${ctx }/op/application/list"><i class="fa fa-font"></i> <span>应用管理</span></a>
-      </li>
-      </c:if>
-      <c:if test="${fn:indexOf(curr_user.privileges,'serverApplicationManageActive') > -1 }">
-      <li class="${serverApplicationManageActive } treeview">
-        <a href="${ctx }/op/serverApplication/list"><i class="fa fa-rocket"></i> <span>应用服务</span></a>
-      </li>
-      </c:if>
-      <c:if test="${fn:indexOf(curr_user.privileges,'configManageActive') > -1 }">
-      <li class="${configManageActive } treeview">
-        <a href="${ctx }/op/config/list"><i class="fa fa-file"></i> <span>配置文件</span></a>
-      </li>
-      </c:if>
-      <c:if test="${fn:indexOf(curr_user.privileges,'versionManageActive') > -1 }">
-      <li class="${versionManageActive } treeview">
-        <a href="${ctx }/op/version/list"><i class="fa fa-upload"></i> <span>版本管理</span></a>
-      </li>
-      </c:if>
-      <c:if test="${fn:indexOf(curr_user.privileges,'deployLogManageActive') > -1 }">
-      <li class="${deployLogManageActive } treeview">
-        <a href="${ctx }/op/deployLog/list"><i class="fa fa-list"></i> <span>发布历史</span></a>
-      </li>
-      </c:if>
-      <c:if test="${fn:indexOf(curr_user.privileges,'userManageActive') > -1 }">
-      <li class="${userManageActive } treeview">
-        <a href="${ctx }/op/user/list"><i class="fa fa-user-secret"></i> <span>用户管理</span></a>
+      <c:if test="${1 == 1}">
+      <li class="${resourceManageActive } treeview">
+        <a href="${ctx }/admin/resource/list"><i class="fa  fa-diamond"></i> <span>资源管理</span></a>
       </li>
       </c:if>
     </ul>
