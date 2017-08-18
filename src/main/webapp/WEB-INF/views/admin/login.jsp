@@ -16,7 +16,7 @@
 						<span>登录</span>
 					</div>
 					<br/>
-					<form id="login" action="login" method="post">
+					<form id="login" action="login" method="post" onsubmit="return ajaxSubmit(this)">
 						<div id="login_form">
 							<div id="log_name">
 								<input type="text" id="log_user" name="username" value="" placeholder="请输入用户名"/>
@@ -24,11 +24,10 @@
 							<div id="log_pwdd">
 								<input type="password" id="log_pwd" name="password" value=""  placeholder="请输入密码"/>
 							</div>
-							
 						</div>
 						<br />
 						<div id="login_bottom">
-							<span style="color:red;">${error_msg }</span>
+							<span style="color:red;" id="error-msg">${error_msg }</span>
 						</div>
 						<div id="log_btnn">
 							<input type="submit" id="log_btn" value="登录"  />
@@ -37,8 +36,28 @@
 			</div>
 		</div>
 		<div class="footer">
-			<span><a href="http://www.duchengxian.com" target="_blank">悲情黑客</a> 版权所有@2013-2017 </span>
+			<span>Power By <a href="http://www.duchengxian.com" target="_blank">悲情黑客</a> @2013-2017 </span>
 		</div>
 	</div>
+<script type="text/javascript" src="${ctx }/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="${ctx }/js/jquery.form.js"></script>
+<script type="text/javascript">
+function ajaxSubmit(o){
+	$("#log_btn").attr("disabled",false);
+	var options = {
+		dataType : 'json',
+		success:function(data){
+			if(data.code == 200){
+				window.location.href = "index";
+			}else{
+				$("#error-msg").html(data.msg);
+				$("#log_btn").attr("disabled",true);
+			}
+		}
+	}
+	$(o).ajaxSubmit(options);
+	return false;
+}
+</script>
 </body>
 </html>
