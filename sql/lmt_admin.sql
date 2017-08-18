@@ -6,6 +6,8 @@ create table lmt_admin(
 	email varchar(50) character set latin1 not null default '' comment '邮箱',
 	phone_num varchar(18) character set latin1 not null default '' comment '手机号',
 	realname varchar(10) not null default '' comment '真实姓名',
+	avatar varchar(128) not null default '' comment '头像',
+	brief varchar(1024) not null default '' comment '简介',
 	status tinyint(4) not null default 1 comment '状态：0删除，1正常',
 	unique key username (username) using btree
 )engine=InnoDB default charset=UTF8;
