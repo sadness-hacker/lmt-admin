@@ -6,8 +6,10 @@
 	}
 	
 a{
-		text-decoration:none;
-	}
+		text-decoration:underline;
+		color : #fff;
+		cursor: pointer;
+}
 	
 body{
 	border:0px;
