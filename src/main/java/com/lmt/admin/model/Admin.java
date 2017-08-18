@@ -46,6 +46,12 @@ public class Admin implements Serializable {
 	
 	@Column(name="realname")
 	private String realname;
+	
+	@Column(name="avatar")
+	private String avatar;
+	
+	@Column(name="brief")
+	private String brief;
 
 	@Column(name="status")
 	private Integer status;
@@ -112,6 +118,22 @@ public class Admin implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getBrief() {
+		return brief;
+	}
+
+	public void setBrief(String brief) {
+		this.brief = brief;
 	}
 	
 }
