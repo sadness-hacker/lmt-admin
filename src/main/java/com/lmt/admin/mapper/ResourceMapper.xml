@@ -3,5 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lmt.admin.mapper.IResourceMapper">
-	
+	<select id="listByRoleId" resultType="com.lmt.admin.model.Resource" parameterType="int">
+		select r.* 
+		from lmt_resource r 
+		join lmt_role_resource rr on r.id = rr.resource_id 
+		where rr.role_id = #{roleId}
+		and r.status = 1
+	</select>
+	<select id="listByAdminId" resultType="com.lmt.admin.model.Resource" parameterType="int">
+		select r.* 
+		from lmt_resource r,
+		join lmt_role_resource rr on rr.resource_id = r.id
+		join lmt_admin_role ar on rr.role_id = ar.role_id
+		where c.admin_id = #{adminId}
+		and r.status = 1
+	</select>
 </mapper>
