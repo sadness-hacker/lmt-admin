@@ -3,8 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lmt.admin.mapper.IRoleMapper">
-	<select id="listByAdminId">
-		select * from lmt_role r join lmt_admin_role ar on ar.role_id=r.id where ar.admin_id = ?
+	<select id="listByAdminId" resultType="com.lmt.admin.model.Role" parameterType="int">
+		select r.* 
+		from lmt_role r 
+		join lmt_admin_role ar on ar.role_id = r.id 
+		where ar.admin_id = #{adminId}
+		and r.status = 1
 	</select>
 	
 </mapper>
