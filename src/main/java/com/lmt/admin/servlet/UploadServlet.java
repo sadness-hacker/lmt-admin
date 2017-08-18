@@ -1,7 +1,10 @@
 package com.lmt.admin.servlet;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -65,7 +68,15 @@ public class UploadServlet extends HttpServlet{
 		if(!file.getParentFile().exists()){
 			file.getParentFile().mkdirs();
 		}
-		part.write(savePath);
+		OutputStream os = new FileOutputStream(file);
+		InputStream is = part.getInputStream();
+		byte [] buff = new byte[1024];
+		int i = -1;
+		while((i = is.read(buff)) > -1){
+			os.write(buff,0,i);
+		}
+		os.close();
+		is.close();
 		String url = GlobalVar.CDN_URL + "/" + path;
 		Map<String,Object> json = new HashMap<String, Object>();
 		json.put("url", url);
