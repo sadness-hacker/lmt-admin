@@ -43,7 +43,7 @@
 <script type="text/javascript" src="${ctx }/js/jquery.form.js"></script>
 <script type="text/javascript">
 function ajaxSubmit(o){
-	$("#log_btn").attr("disabled",false);
+	$("#log_btn").attr("disabled",true);
 	var options = {
 		dataType : 'json',
 		success:function(data){
@@ -51,7 +51,7 @@ function ajaxSubmit(o){
 				window.location.href = "index";
 			}else{
 				$("#error-msg").html(data.msg);
-				$("#log_btn").attr("disabled",true);
+				$("#log_btn").attr("disabled",false);
 			}
 		}
 	}
