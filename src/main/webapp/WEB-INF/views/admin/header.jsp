@@ -3,9 +3,9 @@
   <!-- Logo -->
   <a href="index" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>运</b>维</span>
+    <span class="logo-mini"><b>权限</b></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>运维</b>发布平台</span>
+    <span class="logo-lg"><b>权限管理</b>后台</span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
