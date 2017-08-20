@@ -100,7 +100,7 @@ request.setAttribute("resourceManageActive", "active");
                </c:if>
                <c:if test="${u.status == 1 && u.id > 0 }">
                  <a href="${ctx }/admin/resource/edit?id=${u.id}" class="btn btn-xs btn-success btn-flat">编辑</a>
-                 <a href="${ctx }/admin/resource/delete?id=${u.id}" class="btn btn-xs btn-success btn-flat">删除</a>
+                 <a href="${ctx }/admin/resource/delete?id=${u.id}" class="btn btn-xs btn-danger btn-flat">删除</a>
                </c:if>
                </td>
              </tr>
