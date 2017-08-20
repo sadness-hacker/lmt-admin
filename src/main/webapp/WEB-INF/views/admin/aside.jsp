@@ -23,7 +23,7 @@
       </c:if>
       <c:if test="${1 == 1}">
       <li class="${resourceManageActive } treeview">
-        <a href="${ctx }/admin/resource/list"><i class="fa  fa-diamond"></i> <span>资源管理</span></a>
+        <a href="${ctx }/admin/resource/list"><i class="fa fa-diamond"></i> <span>资源管理</span></a>
       </li>
       </c:if>
     </ul>

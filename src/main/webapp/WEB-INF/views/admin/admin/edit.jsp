@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
-request.setAttribute("userManageActive", "active");
+request.setAttribute("adminManageActive", "active");
 %>
 <!DOCTYPE html>
 <html>
