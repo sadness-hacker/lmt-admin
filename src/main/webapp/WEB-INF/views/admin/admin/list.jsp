@@ -76,7 +76,7 @@ request.setAttribute("adminManageActive", "active");
                <td>${u.phoneNum }</td>
                <td>
                	<c:forEach var="r" items="${u.roleList }" varStatus="status">
-               		<c:if test="${status.count > 0 }"><br/></c:if>
+               		<c:if test="${status.count > 1 }"><br/></c:if>
                		${r.name }
                	</c:forEach>
                </td>
@@ -114,7 +114,7 @@ request.setAttribute("adminManageActive", "active");
            	 <li><a href="javascript:void(0);" onclick="$('#ducx-query-curr-page').val(1);$('#ducx-query-form').submit();">首页</a></li>
              <li><a href="javascript:void(0);" onclick="$('#ducx-query-curr-page').val(${pageModel.currPage - 1});$('#ducx-query-form').submit();">«</a></li>
            </c:if>
-           <c:forEach var="page" begin="1" end="${pageModel.totalPage + 1}" varStatus="status">
+           <c:forEach var="page" begin="1" end="${pageModel.totalPage}" varStatus="status">
            	  <li <c:if test="${page == pageModel.currPage }">class="active"</c:if>><a href="javascript:void(0);" onclick="$('#ducx-query-curr-page').val(${page});$('#ducx-query-form').submit();">${page}</a></li>
            </c:forEach>
            <c:if test="${pageModel.currPage < pageModel.totalPage }">

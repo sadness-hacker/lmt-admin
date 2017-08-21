@@ -87,6 +87,31 @@ request.setAttribute("adminManageActive", "active");
 			    <textarea name="brief" type="text" class="form-control" id="brief" value="${admin.brief }" placeholder="请输用户简介" required="required">${admin.brief}</textarea>
 			  </div>
 		  	</div>
+		  	<div class="form-group">
+			  <label for="brief" class="col-sm-2 control-label">角色</label>
+			  <div class="col-sm-10">
+			    <table class="table table-bordered">
+			    	<tbody>
+			    	  <c:forEach var="r" items="${roleList }">
+			    	   <c:if test="${booleanMap[r.id] == true }">
+					       <tr data-id="${r.id }">
+					        <td><input type="checkbox" value="${r.id }" name="roleId" checked="checked" /></td>
+					        <td>${r.name }</td>
+					        <td>${r.description }</td>
+					       </tr>
+				       </c:if>
+				       <c:if test="${booleanMap[r.id] == null }">
+					       <tr data-id="${r.id }">
+					        <td><input type="checkbox" value="${r.id }" name="roleId" /></td>
+					        <td>${r.name }</td>
+					        <td>${r.description }</td>
+					       </tr>
+				       </c:if>
+				      </c:forEach>
+			    	</tbody>
+			    </table>
+			  </div>
+		  	</div>
 		  	
 		  	<div class="form-group">
 			  	<label for="submit" class="col-sm-2 control-label"></label>
