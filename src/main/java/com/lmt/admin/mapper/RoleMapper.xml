@@ -8,6 +8,7 @@
 		from lmt_role r 
 		join lmt_admin_role ar on ar.role_id = r.id 
 		where ar.admin_id = #{adminId}
+		and ar.status = 1
 		and r.status = 1
 	</select>
 	
