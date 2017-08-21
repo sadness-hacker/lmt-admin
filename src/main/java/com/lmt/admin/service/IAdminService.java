@@ -11,4 +11,11 @@ import com.lmt.orm.mybatis.service.IMybatisBaseService;
  */
 public interface IAdminService extends IMybatisBaseService<IAdminMapper, Admin, Integer> {
 
+	/**
+	 * 添加管理员角色
+	 * @param id
+	 * @param roleIds
+	 */
+	public void addAdminRole(int id, int[] roleIds);
+
 }

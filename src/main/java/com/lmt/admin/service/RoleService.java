@@ -49,9 +49,15 @@ public class RoleService extends MybatisBaseService<IRoleMapper, Role, Integer> 
 		for(RoleResource rrs : rrList){
 			if(set.contains(rrs.getResourceId())){
 				set.remove(rrs.getResourceId());
+				if(rrs.getStatus() == 0){
+					rrs.setStatus(1);
+					roleResourceMapper.update(rrs);
+				}
 			}else{
-				rrs.setStatus(0);
-				roleResourceMapper.update(rrs);
+				if(rrs.getStatus() == 1){
+					rrs.setStatus(0);
+					roleResourceMapper.update(rrs);
+				}
 			}
 		}
 		for(Integer resId : set){
