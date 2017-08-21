@@ -119,6 +119,14 @@ public class AdminAction extends BaseAction {
 		if(id > 0){
 			Admin admin = adminService.get(id);
 			request.setAttribute("admin", admin);
+			List<Role> rList = roleService.listByAdminId(id);
+			Map<Integer,Boolean> booleanMap = new HashMap<Integer, Boolean>();
+			for(Role r : rList){
+				booleanMap.put(r.getId(), true);
+			}
+			request.setAttribute("booleanMap", booleanMap);
+			List<Role> roleList = roleService.listAll();
+			request.setAttribute("roleList", roleList);
 		}
 		return "admin/admin/edit";
 	}
@@ -141,6 +149,7 @@ public class AdminAction extends BaseAction {
 			@RequestParam(name="avatar") String avatar,
 			@RequestParam(name="brief") String brief,
 			@RequestParam(name="status",defaultValue="1") int status,
+			@RequestParam(name="roleId",defaultValue="") int [] roleIds,
 			HttpServletRequest request,HttpServletResponse response){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("success", true);
@@ -181,6 +190,7 @@ public class AdminAction extends BaseAction {
 			admin.setAvatar(avatar);
 			admin.setBrief(brief);
 			adminService.insert(admin);
+			id = admin.getId();
 		}else{
 			Admin admin = adminService.get(id);
 			if(!email.equalsIgnoreCase(admin.getEmail())){
@@ -209,6 +219,7 @@ public class AdminAction extends BaseAction {
 			admin.setBrief(brief);
 			adminService.update(admin);
 		}
+		adminService.addAdminRole(id,roleIds);
 		map.put("code", 200);
 		map.put("msg", "保存成功");
 		return map;
