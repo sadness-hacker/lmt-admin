@@ -41,6 +41,7 @@ request.setAttribute("roleManageActive", "active");
          <form class="form-horizontal" id="save-form" method="post" onsubmit="return checkForm(this)" data-toggle="validator" autocomplete="off">
            <input type="hidden" name="id" value="${role.id }" />
            <input type="hidden" name="status" value="1" />
+           <input type="hidden" name="srcIds" value="" id="src-ids">
            <div class="box-body">
            	<div class="form-group">
                <label for="name" class="col-sm-2 control-label">角色名</label>
@@ -54,14 +55,31 @@ request.setAttribute("roleManageActive", "active");
 			    <textarea name="description" type="text" class="form-control" id="description" placeholder="请输角色描述" required="required">${role.description}</textarea>
 			  </div>
 		  	</div>
-		  	
+		  	<div class="form-group">
+			  <label for="resourceIds" class="col-sm-2 control-label">角色权限</label>
+			  <div class="col-sm-10">
+			    <table class="table table-bordered">
+			    	<tbody id="src-tbody">
+			    	  <c:forEach var="r" items="${resList }">
+				       <tr class="res-tr" data-id="${r.id }">
+				        <td>${r.name }</td>
+				        <td>${r.type }</td>
+				        <td>${r.key }<br>${r.url }</td>
+				        <td>${r.description }</td>
+				       </tr>
+				      </c:forEach>
+			    	</tbody>
+			    </table>
+			  </div>
+		  	</div>
 		  	<div class="form-group">
 			  	<label for="submit" class="col-sm-2 control-label"></label>
 			  	<div class="col-sm-10" style="text-align: center;">
 					<span style="color:red;" id="error-msg"></span>
 				</div>
 			</div>
-		  	<div class="form-group">
+			  	
+			 <div class="form-group">
 			  	<label for="submit" class="col-sm-2 control-label"></label>
 			  	<div class="col-sm-10" style="text-align: center;">
 					<input id="btn-submit" value="保存" type="submit" class="btn btn-success btn-flat" style="width:15%;" onclick="$('#save-form').attr('action','${ctx}/admin/role/save');$('#save-form').attr('target','_self');">
@@ -69,7 +87,12 @@ request.setAttribute("roleManageActive", "active");
 			</div>
          </form>
        </div>
+         <div class="form-group box-header with-border" id="select-resource-div">
+	           
+		 </div>
+		 
     </section>
+    
     <!-- /.content -->
   </div>
 <%@ include file="../footer.jsp" %>
@@ -86,6 +109,16 @@ function uploadCallback(result,id){
 }
 function checkForm(o){
 	$("#btn-submit").attr("disabled",true);
+	var ids = '';
+	$(".res-tr").each(function(){
+		var id = $(this).data('id');
+		if(ids == ''){
+			ids = id;
+		}else{
+			ids = ids + "," + id;
+		}
+	});
+	$("#src-ids").val(ids);
 	var options = {
 		dataType : 'json',
 		success:function(data){
@@ -104,6 +137,100 @@ function returnTypeChange(o){
 	var key = $(o).val();
 	$("#returnValue").val($(o).data(key));
 }
+function queryResouce(o){
+	var options = {
+		dataType : 'html',
+		success:function(html){
+			$("#select-resource-div").html(html);
+			$(".src-input").each(function(){
+				var si = $(this);
+				$(".res-tr").each(function(){
+					if($(this).data('id') == si.val()){
+						si.prop('checked','checked');
+					}
+				});
+			});
+		}
+	}
+	$(o).ajaxSubmit(options);
+	return false;
+}
+function selectAllSrc(o){
+	if($(o).is(':checked')){
+		$(".src-input").prop('checked','checked');
+	}else{
+		$(".src-input").removeAttr("checked");
+	}
+	$(".src-input").each(function(){
+		var si = $(this);
+		if($(this).is(':checked')){
+			var b = true;
+			$(".res-tr").each(function(){
+				if($(this).data('id') == si.val()){
+					b = false;
+				}
+			});
+			if(b){
+				var html = '<tr class="res-tr" data-id="' + $(this).val() + '">' + 
+	        	'<td>' + $(this).data('name') + '</td>' + 
+	        	'<td>' + $(this).data('type') + '</td>' +
+	        	'<td>' + $(this).data('key') + '</td>' +
+	        	'<td>' + $(this).data('url') + '</td>' +
+	       		'</tr>';
+	       	$("#src-tbody").append(html);
+			}
+		}else{
+			$(".res-tr").each(function(){
+				if($(this).data('id') == si.val()){
+					$(this).remove();
+				}
+			});
+		}
+	});
+}
+function selectSrc(o){
+	if($(o).is(':checked')){
+		var html = '<tr class="res-tr" data-id="' + $(o).val() + '">' + 
+        	'<td>' + $(o).data('name') + '</td>' + 
+        	'<td>' + $(o).data('type') + '</td>' +
+        	'<td>' + $(o).data('key') + '</td>' +
+        	'<td>' + $(o).data('url') + '</td>' +
+       		'</tr>';
+       	$("#src-tbody").append(html);
+	}else{
+		$(".res-tr").each(function(){
+			if($(this).data('id') == $(o).val()){
+				$(this).remove();
+			}
+		});
+	}
+	var b = true;
+	$(".src-input").each(function(){
+		if($(this).is(':checked')){
+		}else{
+			b = false;
+		}
+	});
+	if(b){
+		$("#src-input-all").prop('checked','checked');
+	}else{
+		$("#src-input-all").removeAttr("checked");
+	}
+}
+$(function(){
+	var url = "${ctx}/admin/resource/queryResource";
+	$.get(url,function(html){
+		$("#select-resource-div").html(html);
+		$(".src-input").each(function(){
+			var si = $(this);
+			$(".res-tr").each(function(){
+				if($(this).data('id') == si.val()){
+					si.prop('checked','checked');
+				}
+			})
+		});
+	});
+});
 </script>
 </body>
 </html>

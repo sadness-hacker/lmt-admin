@@ -55,6 +55,7 @@ request.setAttribute("roleManageActive", "active");
                <th>编号</th>
                <th>角色名</th>
                <th>角色描述</th>
+               <th>状态</th>
                <th>操作</th>
              </tr>
            <c:forEach var="u" items="${pageModel.list }">
