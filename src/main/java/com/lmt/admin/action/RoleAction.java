@@ -1,16 +1,19 @@
 package com.lmt.admin.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lmt.admin.model.Resource;
 import com.lmt.admin.model.Role;
 import com.lmt.admin.service.IResourceService;
 import com.lmt.admin.service.IRoleResourceService;
@@ -74,6 +77,8 @@ public class RoleAction extends BaseAction {
 		if(id > 0){
 			Role role = roleService.get(id);
 			request.setAttribute("role", role);
+			List<Resource> resList = resourceService.listByRoleId(id);
+			request.setAttribute("resList", resList);
 		}
 		return "admin/role/edit";
 	}
@@ -91,6 +96,7 @@ public class RoleAction extends BaseAction {
 			@RequestParam(value="name") String name,
 			@RequestParam(value="status") int status,
 			@RequestParam(value="description") String description,
+			@RequestParam(value="srcIds",defaultValue="") String srcIds,
 			HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("success", true);
@@ -126,6 +132,9 @@ public class RoleAction extends BaseAction {
 			role.setName(name);
 			roleService.update(role);
 			map.put("msg", "修改成功");
+		}
+		if(StringUtils.isNotBlank(srcIds)){
+			roleService.addRoleResource(role.getId(),srcIds.split(","));
 		}
 		return map;
 	}

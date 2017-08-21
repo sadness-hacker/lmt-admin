@@ -317,4 +317,44 @@ public class ResourceAction extends BaseAction {
 		return map;
 	}
 	
+	/**
+	 * 编辑角色时查寻资源
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/queryResource",name="编辑角色时查寻资源")
+	public String queryResource(
+			@RequestParam(value="resIds",defaultValue="") String resIds,
+			@RequestParam(value="currPage",defaultValue="1") int currPage,
+			@RequestParam(value="limit",defaultValue="10") int limit,
+			@RequestParam(value="keyword",required=false) String keyword,
+			HttpServletRequest request,HttpServletResponse response){
+		List<Resource> list = resourceService.listAll();
+		List<Resource> resList = list;
+		if(StringUtils.isNotBlank(keyword)){
+			resList = new ArrayList<Resource>(list.size());
+			for(Resource res : list){
+				String key = res.getDescription() + res.getDeveloper() + res.getKey() + res.getName() + res.getReturnType() + res.getReturnValue() + res.getType() + res.getUrl() + res.getStatus() + resourceTypeMap.get(res.getType());
+				if(key.indexOf(keyword) > -1){
+					resList.add(res);
+				}
+			}
+		}
+		if(resList.size() > limit){
+			int start = (currPage - 1) * limit;
+			int end = start + limit;
+			if(end > resList.size()){
+				end = resList.size();
+			}
+			resList = resList.subList(start, end);
+		}
+		PaginationModel<Resource> pageModel = new PaginationModel<Resource>();
+		pageModel.setLimit(limit);
+		pageModel.setCurrPage(currPage);
+		pageModel.setList(resList);
+		request.setAttribute("pageModel", pageModel);
+		return "admin/resource/queryResource";
+	}
+	
 }
