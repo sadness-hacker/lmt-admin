@@ -20,4 +20,11 @@ public interface IRoleService extends IMybatisBaseService<IRoleMapper, Role, Int
 	 */
 	public List<Role> listByAdminId(int adminId);
 
+	/**
+	 * 批量添加角色资源
+	 * @param id
+	 * @param srcIds
+	 */
+	public void addRoleResource(Integer id, String[] srcIds);
+
 }
