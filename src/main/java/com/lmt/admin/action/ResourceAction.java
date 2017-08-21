@@ -147,9 +147,19 @@ public class ResourceAction extends BaseAction {
 			}
 	        list = arList;
         }
+        
         PaginationModel<Resource> pageModel = new PaginationModel<Resource>();
 		pageModel.setCurrPage(currPage);
 		pageModel.setLimit(limit);
+		pageModel.setTotalNum(list.size());
+		if(list.size() > limit){
+        	int start = (currPage - 1) * limit;
+        	int end = start + limit;
+        	if(end > list.size()){
+        		end = list.size();
+        	}
+        	list = list.subList(start, end);
+        }
         pageModel.setList(list);
         request.setAttribute("pageModel", pageModel);
         request.setAttribute("resourceTypeMap", resourceTypeMap);
