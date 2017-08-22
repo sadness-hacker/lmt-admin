@@ -77,8 +77,13 @@ request.setAttribute("roleManageActive", "active");
                	</c:choose>
                	</td>
                <td>
+               <c:if test="${u.id > 1 }">
                  <a href="${ctx }/admin/role/edit?id=${u.id}" class="btn btn-xs btn-success btn-flat">编辑</a>
                  <a href="${ctx }/admin/role/delete?id=${u.id}" class="btn btn-xs btn-danger btn-flat">删除</a>
+               </c:if>
+               <c:if test="${u.id == 1 }">
+               	<span style="color:red;">超管角色不可修改</span>
+               </c:if>
                </td>
              </tr>
            </c:forEach>
