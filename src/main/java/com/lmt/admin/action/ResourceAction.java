@@ -98,7 +98,7 @@ public class ResourceAction extends BaseAction {
 	@RequestMapping(value="/list",name="资源列表")
 	public String list(
 			@RequestParam(name="currPage",defaultValue="1") int currPage,
-			@RequestParam(name="limit",defaultValue="10") int limit,
+			@RequestParam(name="pageSize",defaultValue="10") int limit,
 			@RequestParam(name="keyword",required=false) String keyword,
 			HttpServletRequest request,HttpServletResponse response){
 		List<Resource> list = resourceService.listAll();
@@ -123,11 +123,11 @@ public class ResourceAction extends BaseAction {
 	        		res.setName(info.getName());
 	        		res.setPid(0);
 	        		if(responseBody == null){
-	        			res.setReturnType("json");
-		        		res.setReturnValue("{'success':true,'code':403,'msg':'您无权进行此操作'}");
-	        		}else{
 	        			res.setReturnType("redirect");
 		        		res.setReturnValue("/admin/login");
+	        		}else{
+		        		res.setReturnType("json");
+		        		res.setReturnValue("{'success':true,'code':403,'msg':'您无权进行此操作'}");
 	        		}
 	        		res.setStatus(0);
 	        		res.setType("url");
@@ -239,6 +239,7 @@ public class ResourceAction extends BaseAction {
 			@RequestParam(value="status",defaultValue="1") int status,
 			@RequestParam(value="type") String type,
 			@RequestParam(value="url") String url,
+			@RequestParam(value="needAuth") int needAuth,
 			HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("success", true);
@@ -282,6 +283,7 @@ public class ResourceAction extends BaseAction {
 			res.setStatus(status);
 			res.setType(type);
 			res.setUrl(url);
+			res.setNeedAuth(needAuth);
 			resourceService.insert(res);
 			map.put("code", 200);
 			map.put("msg", "保存成功");
@@ -311,6 +313,7 @@ public class ResourceAction extends BaseAction {
 			map.put("msg", "资源名已被使用");
 			return map;
 		}
+		res.setNeedAuth(needAuth);
 		res.setDescription(description);
 		res.setDeveloper(developer);
 		res.setKey(key);
@@ -337,7 +340,7 @@ public class ResourceAction extends BaseAction {
 	public String queryResource(
 			@RequestParam(value="resIds",defaultValue="") String resIds,
 			@RequestParam(value="currPage",defaultValue="1") int currPage,
-			@RequestParam(value="limit",defaultValue="10") int limit,
+			@RequestParam(value="pageSize",defaultValue="10") int limit,
 			@RequestParam(value="keyword",required=false) String keyword,
 			HttpServletRequest request,HttpServletResponse response){
 		List<Resource> list = resourceService.listAll();
@@ -365,6 +368,31 @@ public class ResourceAction extends BaseAction {
 		pageModel.setList(resList);
 		request.setAttribute("pageModel", pageModel);
 		return "admin/resource/queryResource";
+	}
+	
+	public static void main(String [] args){
+		Integer [] arr = new Integer[Integer.MAX_VALUE];
+		int [] nums = {100,99,88,77,66,88,99};
+		//排序开始
+		for(int i : nums){
+			Integer m = arr[i];
+			if(m == null){
+				arr[i] = 1;
+			}else{
+				arr[i] = m + 1;
+			}
+		}
+		//排序结束
+		
+		//输出排序后的数据
+		for(int i=0;i<Integer.MAX_VALUE;i++){
+			if(arr[i] == null){
+				continue;
+			}
+			for(int j=0;j<arr[i].intValue();j++){
+				System.out.println(i);
+			}
+		}
 	}
 	
 }
