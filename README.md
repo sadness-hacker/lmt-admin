@@ -17,4 +17,6 @@
 
 开发指南：http://www.duchengxian.com/blog/50
 
-联系邮箱：adu003@163.com
+邮箱：adu003@163.com
+
+QQ：605229811
