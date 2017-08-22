@@ -25,4 +25,20 @@ public class ResourceService extends MybatisBaseService<IResourceMapper, Resourc
 		return resourceMapper.listByRoleId(roleId);
 	}
 
+	@Override
+	public Resource getResourceBy(String url) {
+		Resource res = new Resource();
+		res.setUrl(url);
+		res = resourceMapper.load(res);
+		if(res.getStatus() == 1){
+			return res;
+		}
+		return null;
+	}
+
+	@Override
+	public List<Resource> listByAdminId(int adminId) {
+		return resourceMapper.listByAdminId(adminId);
+	}
+
 }
