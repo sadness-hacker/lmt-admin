@@ -55,3 +55,6 @@ create table lmt_role_resource(
 	unique key role_id_resource_id (role_id,resource_id) using btree,
 	key resource_id (resource_id) using btree
 )engine=InnoDB default charset=UTF8;
+
+alter table lmt_resource add column need_auth tinyint(4) default 1 comment '是否需要验证登录';
+
