@@ -11,17 +11,17 @@
       <li class="${dashboardManageActive } treeview">
           <a href="${ctx }/admin/index"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
       </li>
-      <c:if test="${1 == 1}">
+      <c:if test="${isSuperAdmin || menuMap['adminManageActive']}">
       <li class="${adminManageActive } treeview">
         <a href="${ctx }/admin/list"><i class="fa fa-user-secret"></i> <span>管理员</span></a>
       </li>
       </c:if>
-      <c:if test="${1 == 1}">
+      <c:if test="${isSuperAdmin || menuMap['roleManageActive']}">
       <li class="${roleManageActive } treeview">
         <a href="${ctx }/admin/role/list"><i class="fa fa-group"></i> <span>角色管理</span></a>
       </li>
       </c:if>
-      <c:if test="${1 == 1}">
+      <c:if test="${isSuperAdmin || menuMap['resourceManageActive']}">
       <li class="${resourceManageActive } treeview">
         <a href="${ctx }/admin/resource/list"><i class="fa fa-diamond"></i> <span>资源管理</span></a>
       </li>
