@@ -14,3 +14,7 @@
 5.权限控制基于Spring MVC的拦截器实现
 
 系统预览：https://github.com/sadness-hacker/lmt-admin/wiki
+
+开发指南：http://www.duchengxian.com/blog/50
+
+联系邮箱：adu003@163.com
