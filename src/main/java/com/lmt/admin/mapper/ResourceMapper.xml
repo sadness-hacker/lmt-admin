@@ -4,7 +4,19 @@
 
 <mapper namespace="com.lmt.admin.mapper.IResourceMapper">
 	<select id="listByRoleId" resultType="com.lmt.admin.model.Resource" parameterType="int">
-		select r.* 
+		select 
+			r.id as id,
+			r.pid as pid,
+			r.name as name,
+			r.type as type,
+			r.c_key as `key`,
+			r.url as url,
+			r.return_type as returnType,
+			r.return_value as returnValue,
+			r.developer as developer,
+			r.description as description,
+			r.status as status,
+			r.need_auth as needAuth
 		from lmt_resource r 
 		join lmt_role_resource rr on r.id = rr.resource_id 
 		where rr.role_id = #{roleId}
@@ -12,13 +24,25 @@
 		and rr.status = 1
 	</select>
 	<select id="listByAdminId" resultType="com.lmt.admin.model.Resource" parameterType="int">
-		select r.* 
-		from lmt_resource r,
+		select 
+			r.id as id,
+			r.pid as pid,
+			r.name as name,
+			r.type as type,
+			r.c_key as `key`,
+			r.url as url,
+			r.return_type as returnType,
+			r.return_value as returnValue,
+			r.developer as developer,
+			r.description as description,
+			r.status as status,
+			r.need_auth as needAuth 
+		from lmt_resource r
 		join lmt_role_resource rr on rr.resource_id = r.id
-		join lmt_admin_role ar on rr.role_id = ar.role_id
+		join lmt_admin_role ar on ar.role_id = rr.role_id
 		where ar.admin_id = #{adminId}
 		and r.status = 1
 		and rr.status = 1
-		adn ar.status = 1
+		and ar.status = 1
 	</select>
 </mapper>
