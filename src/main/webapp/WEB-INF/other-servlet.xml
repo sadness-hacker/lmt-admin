@@ -75,4 +75,8 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
+	<mvc:interceptors>  
+	    <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+	    <bean class="com.lmt.admin.interceptor.AuthAdminInterceptor"/>
+	</mvc:interceptors>
 </beans>
