@@ -101,6 +101,12 @@ public class RoleAction extends BaseAction {
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("success", true);
 		map.put("code", 200);
+		if(id == 1){
+			map.put("success", true);
+			map.put("code", 201);
+			map.put("msg", "超级管理员角色，不可修改");
+			return map;
+		}
 		Role role = roleService.get(id);
 		if(role == null){
 			role = new Role();
