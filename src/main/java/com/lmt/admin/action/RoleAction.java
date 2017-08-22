@@ -52,7 +52,7 @@ public class RoleAction extends BaseAction {
 	@RequestMapping(value="/list",name="获取角色列表")
 	public String list(
 			@RequestParam(value="currPage",defaultValue="1") int currPage,
-			@RequestParam(value="limit",defaultValue="10") int limit,
+			@RequestParam(value="pageSize",defaultValue="10") int limit,
 			@RequestParam(value="keyword",required=false) String keyword,
 			HttpServletRequest request,HttpServletResponse response){
 		PaginationModel<Role> pageModel = new PaginationModel<Role>();
