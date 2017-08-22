@@ -52,8 +52,8 @@ request.setAttribute("resourceManageActive", "active");
                <label for="name" class="col-sm-2 control-label">是否需要验证</label>
                <div class="col-sm-10">
                  <select class="form-control" name="needAuth">
-                 	<option value="1">是</option>
-                 	<option value="0">否</option>
+                 	<option value="1" <c:if test="${res.needAuth == 1 }">selected="selected"</c:if>>是</option>
+                 	<option value="0" <c:if test="${res.needAuth == 0 }">selected="selected"</c:if>>否</option>
                  </select>
                </div>
              </div>

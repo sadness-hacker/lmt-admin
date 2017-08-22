@@ -65,7 +65,14 @@ request.setAttribute("resourceManageActive", "active");
              <tr>
                <td>${u.id }</td>
                <td><label>${u.name }</label></td>
-               <td>${resourceTypeMap[u.type] }</td>
+               <td>${resourceTypeMap[u.type] }<br/>
+               	<c:if test="${u.needAuth == 0 }">
+               		<span style="color:red;">不需验证</span>
+               	</c:if>
+               	<c:if test="${u.needAuth == 1 }">
+               		<span style="color:green;">需要验证</span>
+               	</c:if>
+               </td>
                <td>${u.key }<br/>${u.url }</td>
                <td>${u.description }</td>
                <td>${u.developer }</td>
