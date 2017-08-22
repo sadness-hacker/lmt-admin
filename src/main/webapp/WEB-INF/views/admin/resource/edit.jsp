@@ -49,6 +49,15 @@ request.setAttribute("resourceManageActive", "active");
                </div>
              </div>
              <div class="form-group">
+               <label for="name" class="col-sm-2 control-label">是否需要验证</label>
+               <div class="col-sm-10">
+                 <select class="form-control" name="needAuth">
+                 	<option value="1">是</option>
+                 	<option value="0">否</option>
+                 </select>
+               </div>
+             </div>
+             <div class="form-group">
                <label for="pid" class="col-sm-2 control-label">资源标识</label>
                <div class="col-sm-10">
                  <input type="text" class="form-control" value="${res.key }" name="key" id="key" placeholder="请输管理员真实姓名" required="required" autocomplete="off">
@@ -60,7 +69,9 @@ request.setAttribute("resourceManageActive", "active");
                  <select class="form-control" name="pid">
                  	<option value="0">顶级资源</option>
                  	<c:forEach var="r" items="${resList }">
-                 		<option value="${r.id }">${r.name }-${r.key }</option>
+                 	  <c:if test="${r.id != res.id }">
+                 		<option value="${r.id }" <c:if test="${r.id == res.id }">selected="selected"</c:if>>${r.name }-${r.key }</option>
+                 	  </c:if>
                  	</c:forEach>
                  </select>
                </div>

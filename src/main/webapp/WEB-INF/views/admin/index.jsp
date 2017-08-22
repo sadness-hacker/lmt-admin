@@ -7,7 +7,7 @@ request.setAttribute("dashboardManageActive", "active");
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>运维平台</title>
+  <title>权限管理后台</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <%@include file="top.jsp" %>
