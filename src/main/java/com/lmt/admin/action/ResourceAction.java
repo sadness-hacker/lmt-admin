@@ -370,29 +370,4 @@ public class ResourceAction extends BaseAction {
 		return "admin/resource/queryResource";
 	}
 	
-	public static void main(String [] args){
-		Integer [] arr = new Integer[Integer.MAX_VALUE];
-		int [] nums = {100,99,88,77,66,88,99};
-		//排序开始
-		for(int i : nums){
-			Integer m = arr[i];
-			if(m == null){
-				arr[i] = 1;
-			}else{
-				arr[i] = m + 1;
-			}
-		}
-		//排序结束
-		
-		//输出排序后的数据
-		for(int i=0;i<Integer.MAX_VALUE;i++){
-			if(arr[i] == null){
-				continue;
-			}
-			for(int j=0;j<arr[i].intValue();j++){
-				System.out.println(i);
-			}
-		}
-	}
-	
 }
