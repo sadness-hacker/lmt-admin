@@ -81,6 +81,12 @@ public class Resource implements Serializable {
 	@Column(name="developer")
 	private String developer;
 	
+	/**
+	 * 是否需要验证，0不需要，1需要
+	 */
+	@Column(name="need_auth")
+	private Integer needAuth;
+	
 	@Column(name="description")
 	private String description;
 	
@@ -173,6 +179,14 @@ public class Resource implements Serializable {
 
 	public void setPid(Integer pid) {
 		this.pid = pid;
+	}
+
+	public Integer getNeedAuth() {
+		return needAuth;
+	}
+
+	public void setNeedAuth(Integer needAuth) {
+		this.needAuth = needAuth;
 	}
 	
 }
