@@ -354,6 +354,10 @@ public class ResourceAction extends BaseAction {
 				}
 			}
 		}
+		PaginationModel<Resource> pageModel = new PaginationModel<Resource>();
+		pageModel.setLimit(limit);
+		pageModel.setCurrPage(currPage);
+		pageModel.setTotalNum(resList.size());
 		if(resList.size() > limit){
 			int start = (currPage - 1) * limit;
 			int end = start + limit;
@@ -362,9 +366,6 @@ public class ResourceAction extends BaseAction {
 			}
 			resList = resList.subList(start, end);
 		}
-		PaginationModel<Resource> pageModel = new PaginationModel<Resource>();
-		pageModel.setLimit(limit);
-		pageModel.setCurrPage(currPage);
 		pageModel.setList(resList);
 		request.setAttribute("pageModel", pageModel);
 		return "admin/resource/queryResource";
