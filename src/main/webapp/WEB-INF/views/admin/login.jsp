@@ -3,13 +3,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>运维平台-登录</title>
+    <title>权限管理-登录</title>
 	<link rel="stylesheet" type="text/css" href="${ctx }/css/login.css" />
 </head>
 <body>
 	<div class ="box1">
 			<img class="bg" src="${ctx }/images/background.jpg" />
-			<div class="title">运维平台</div>
+			<div class="title">后台权限管理</div>
 			<div id="log_center">
 				<div id="log_contain">
 					<div id="log1">
