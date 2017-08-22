@@ -4,7 +4,12 @@
 
 <mapper namespace="com.lmt.admin.mapper.IRoleResourceMapper">
 	<select id="getByAdminIdResId" resultType="com.lmt.admin.model.RoleResource">
-		select rr.* from 
+		select 
+			rr.id as id
+			rr.role_id as roleId,
+			rr.resource_id as resourceId,
+			rr.status as status
+		from 
 		lmt_admin a
 		join lmt_admin_role ar on a.id = ar.admin_id
 		join lmt_role r on ar.role_id = r.id
