@@ -70,7 +70,7 @@ request.setAttribute("resourceManageActive", "active");
                  	<option value="0">顶级资源</option>
                  	<c:forEach var="r" items="${resList }">
                  	  <c:if test="${r.id != res.id }">
-                 		<option value="${r.id }" <c:if test="${r.id == res.id }">selected="selected"</c:if>>${r.name }-${r.key }</option>
+                 		<option value="${r.id }" <c:if test="${r.id == res.pid }">selected="selected"</c:if>>${r.name }-${r.key }</option>
                  	  </c:if>
                  	</c:forEach>
                  </select>
