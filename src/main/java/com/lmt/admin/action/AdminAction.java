@@ -69,7 +69,7 @@ public class AdminAction extends BaseAction {
 	@RequestMapping(value="/list",name="管理员列表")
 	public String list(
 			@RequestParam(name="currPage",defaultValue="0") int currPage,
-			@RequestParam(name="limit",defaultValue="10") int limit,
+			@RequestParam(name="pageSize",defaultValue="10") int limit,
 			@RequestParam(value="username",required=false) String username,
 			@RequestParam(value="realname",required=false) String realname,
 			@RequestParam(value="email",required=false) String email,
