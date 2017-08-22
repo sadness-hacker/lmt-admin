@@ -11,5 +11,12 @@ import com.lmt.orm.mybatis.service.IMybatisBaseService;
  *
  */
 public interface IRoleResourceService extends IMybatisBaseService<IRoleResourceMapper, RoleResource, Integer> {
-
+	/**
+	 * 根据adminId,资源id获取角色资源对象
+	 * @param adminId
+	 * @param resourceId
+	 * @return
+	 */
+	public RoleResource getByAdminIdResId(int adminId, int resourceId);
+	
 }
