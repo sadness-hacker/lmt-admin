@@ -42,7 +42,8 @@
 	            <entry key="xhtml" value="text/html" />
 	       </map>
 	    </property>
-  	</bean>   
+  	</bean>
+  	<!-- jacksonConverter json转换器配置 -->
   	<bean id="jacksonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
   		<property name="objectMapper">
   			<bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
@@ -62,6 +63,7 @@
 	        </list>
 	    </property>
   	</bean>
+  	<!-- jacksonConverter json/string转换器配置 -->
 	<mvc:annotation-driven conversion-service="conversionService" content-negotiation-manager="contentNegotiationManager" >
 		<mvc:message-converters register-defaults="true">
 		    <ref bean="stringHttpMessageConverter"/>
@@ -77,6 +79,7 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
 	<mvc:interceptors>  
 	    <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+	    <!-- 配置权限管理拦截器 -->
 	    <bean class="com.lmt.admin.interceptor.AuthAdminInterceptor"/>
 	</mvc:interceptors>
 </beans>
