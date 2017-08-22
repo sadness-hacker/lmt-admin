@@ -2,9 +2,9 @@ package com.lmt.admin.action;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lmt.admin.model.Admin;
+import com.lmt.admin.model.AdminRole;
+import com.lmt.admin.model.Resource;
+import com.lmt.admin.service.IAdminRoleService;
 import com.lmt.admin.service.IAdminService;
+import com.lmt.admin.service.IResourceService;
 import com.lmt.common.action.BaseAction;
 import com.lmt.common.util.PasswordUtil;
 import com.lmt.common.util.RequestUtil;
@@ -32,8 +36,14 @@ import com.lmt.common.util.RequestUtil;
 @RequestMapping(value="/admin")
 public class LoginAction extends BaseAction {
 	
-	@Resource
+	@javax.annotation.Resource
 	private IAdminService adminService;
+	
+	@javax.annotation.Resource
+	private IAdminRoleService adminRoleService;
+	
+	@javax.annotation.Resource
+	private IResourceService resourceService;
 	
 	@RequestMapping(value="/login",method=RequestMethod.GET,name="获取登录页面")
 	public String login(
@@ -85,6 +95,19 @@ public class LoginAction extends BaseAction {
 		RequestUtil.setCurrAdmin(request, admin);
 		map.put("code", 200);
 		map.put("msg", "登录成功");
+		AdminRole ar = adminRoleService.getByAdminIdRoleId(admin.getId(), 1);
+		if(ar != null){
+			request.getSession().setAttribute("isSuperAdmin", true);
+		}else{
+			List<Resource> resList = resourceService.listByAdminId(admin.getId());
+			Map<String,Boolean> menuMap = new HashMap<String, Boolean>();
+			for(Resource res : resList){
+				if("menu".equals(res.getType())){
+					menuMap.put(res.getKey(), true);
+				}
+			}
+			request.getSession().setAttribute("menuMap", menuMap);
+		}
 		return map;
 	}
 	
